@@ -1,1 +1,1 @@
-# medicalQR2
+# medicalQR

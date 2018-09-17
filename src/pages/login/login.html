@@ -1,0 +1,47 @@
+<ion-content>
+  <!-- set your image path -->
+  <div class="background" style="background: url('./assets/imgs/login-background.jpg')"></div>
+  <div class="cape"></div>
+  <div class="content" content>
+    <figure>
+      <!-- set path to your logo -->
+      <img class="login-logo" src="./assets/imgs/qrlogo.jpg" alt="Logo">
+    </figure>
+
+    <form [formGroup]="loggedUser" (ngSubmit)="logForm()" class="login-form">
+      <ion-item>
+        <ion-label color="dark-yellow">
+          Tipo de usuario
+        </ion-label>
+          <ion-select formControlName="role">
+            <ion-option *ngFor="let role of allRoles" value="{{role.roles_id}}">{{role.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label color="dark-yellow">
+          CUIT/CUIL 
+        </ion-label>
+        <ion-input type="text" [brmasker]="{mask:'00-00000000-0', len:13, type:'num'}" formControlName="document"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="dark-yellow">
+          Password
+        </ion-label>
+        <ion-input type="password" name = "password" formControlName="password"></ion-input>
+      </ion-item>
+      <button ion-button full color="darken-blue" type="submit" [disabled]="!loggedUser.valid">Login</button>
+    </form>
+
+    <p ion-text color="light" >Did you forget your password?
+        <a (click)="recoveryPassword()" ion-text color="secondary">
+          <br>Recover password
+        </a>
+    </p>
+    
+    <hr class="divider">
+    <button ion-button clear color="light" (click)="register()">
+      Create an account
+    </button>
+  </div>
+</ion-content>
+  
