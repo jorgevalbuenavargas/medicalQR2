@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, MenuController, NavParams } from 'ionic-angular';
 import { DatabaseServiceProvider } from '../../providers/database-service/database-service';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { LoginPage } from '../login/login';
@@ -9,9 +9,8 @@ import { Guid } from "guid-typescript";
 import { AlertController } from 'ionic-angular';
 import { PasswordValidator } from  '../../validators/password';
 
-
 /**
- * Generated class for the RegisterPage page.
+ * Generated class for the AdminRegisterPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -19,35 +18,37 @@ import { PasswordValidator } from  '../../validators/password';
 
 @IonicPage()
 @Component({
-  selector: 'page-register',
-  templateUrl: 'register.html',
+  selector: 'page-admin-register',
+  templateUrl: 'admin-register.html',
 })
-export class RegisterPage {
+export class AdminRegisterPage {
 
   newUser : any = {};
   allUsers : any = {};
   allRoles : any = [];
   allStates : any = [];
   errorMessage : any;
+  passwordErrorMessage : any;
+  cPasswordErrorMessage : any;
 
-  constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public firebase: DatabaseServiceProvider, private formBuilder: FormBuilder) {
+  constructor(public menuCtrl: MenuController, public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public firebase: DatabaseServiceProvider, private formBuilder: FormBuilder) {
     
     this.newUser = this.formBuilder.group({
       document: ['', Validators.compose([Validators.required, Validators.minLength(13)])],
-      license: [''],
       name : ['', Validators.required],
       email : ['', Validators.compose([Validators.required, Validators.email])],
-      password : ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(12), Validators.pattern('[a-zA-Z0-9]*'), PasswordValidator.isValid])],
-      cPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(12), Validators.pattern('[a-zA-Z0-9]*'), PasswordValidator.isValid])],
+      password : ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.pattern('[a-zA-Z0-9]*'), PasswordValidator.isValid])],
+      cPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.pattern('[a-zA-Z0-9]*'), PasswordValidator.isValid])],
       role_id: ['', Validators.required],
     })
     this.allUsers = {};
     this.obtainAllRoles();
     this.obtainAllUsers();   
- 
+    this.menuCtrl.enable(true, 'myMenu'); 
   }
 
   ionViewDidLoad() {
+    this.menuCtrl.enable(true, 'myMenu');
     this.obtainAllRoles();
     this.obtainAllUsers();
   }
@@ -69,8 +70,12 @@ export class RegisterPage {
   obtainAllRoles(){
     this.firebase.getRoles().valueChanges().subscribe(
       roles => {
-        roles.splice(0, 1); 
-        this.allRoles = roles;
+        this.allRoles = roles
+        for (let i = 0; i < this.allRoles.length; i++) {
+          if(this.allRoles[i].roles_id != "" || this.allRoles[i].roles_id != ""){
+            this.allRoles = this.allRoles.splice(i, i+1)
+          }
+        }
       }
     )
   }
@@ -94,10 +99,9 @@ export class RegisterPage {
       this.comparePasswords(password, cPassword)
     }
     if(this.errorMessage == null){
-      this.obtainCorrectState();
       let createdUser = {
         document : this.newUser.value.document,
-        license : this.newUser.value.license,
+        license : "",
         name : this.newUser.value.name,
         email : this.newUser.value.email,
         password : cPassword,
@@ -106,7 +110,7 @@ export class RegisterPage {
         user_state_id : this.newUser.value.user_state_id
       }
       this.firebase.createUser(createdUser);
-      this.goToHome(createdUser.role_id);
+      this.showPrompt();
     }
   }
 
@@ -127,41 +131,14 @@ export class RegisterPage {
     }
   }
 
-  obtainCorrectState(){
-    if(this.newUser.value.role_id == "37a938a1-e7f0-42c2-adeb-b8a9a36b6cb8"){ //Profesionales de la salud
-      this.newUser.value.user_state_id = "bfff8fef-7b54-42c1-bf7f-83232a08cf5c" //Pendiente
-    } else {
-      this.newUser.value.user_state_id = "2103d550-17c2-4ff5-9b61-73e7f4ea6a7f" //Habilitado
-    }
-  }
-
-  setValidatorsForMedicalLicense(){
-    if(this.newUser.value.role_id == "37a938a1-e7f0-42c2-adeb-b8a9a36b6cb8"){
-      this.newUser.controls["license"].setValidators([Validators.required])
-      this.newUser.get("license").updateValueAndValidity();
-    }else if (this.newUser.value.role_id == "bd94bc0d-53d6-47e0-8bf6-95fc63b28a93"){
-      this.newUser.value.license = "";
-      this.newUser.get("license").clearValidators();
-      this.newUser.get("license").updateValueAndValidity();
-    }
-  }
-  goToHome(role_id){
-    if (role_id == "37a938a1-e7f0-42c2-adeb-b8a9a36b6cb8"){ //Doctores
-      let message = "El Ministerio de salud deberá habilitar tu registro en no menos de 48 horas, te avisaremos una vez el Ministerio habilite tu registro";
-      this.showPrompt(message);
-    }else if (role_id == "bd94bc0d-53d6-47e0-8bf6-95fc63b28a93"){ //Farmacias
-      let message = "Por favor ingresa nuevamente tus datos para acceder a la aplicación";
-      this.showPrompt(message);
-    }
-  }
-
-  showPrompt(message) {
+  showPrompt() {
     const alert = this.alertCtrl.create({
-      title: '¡Gracias por registrarte!',
-      subTitle: message,
+      title: '¡Éxito!',
+      subTitle: "Usuario registrado con éxito",
       buttons: ['OK']
     });
     alert.present();
     this.navCtrl.push(LoginPage);
   }
+
 }

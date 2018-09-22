@@ -11,6 +11,12 @@
       <button ion-item (click)="openHome()">
         Inicio
       </button>
+      <button ion-item (click)="openHomePharmacy()" *ngIf="role_id == ''">
+        Lectura de códigos QR
+      </button>
+      <button ion-item (click)="openAdminRegisterPage()" *ngIf="role_id == '' || role_id == ''">
+        Registro de usuarios
+      </button>
       <button ion-item (click)="openProfile()">
         Perfil de usuario
       </button>

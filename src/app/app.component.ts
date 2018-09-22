@@ -18,6 +18,7 @@ import { ModalPharmacyPage } from '../pages/modal-pharmacy/modal-pharmacy';
 import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { GlobalDataProvider } from '../providers/global-data/global-data';
+import { AdminRegisterPage } from '../pages/admin-register/admin-register';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class MyApp {
   rootPage = LoginPage;
   pages: Array<{title: string, component: any}>;
   actualView: any;
+  role_id : any;
 
   constructor(
     public platform: Platform,
@@ -42,7 +44,7 @@ export class MyApp {
     // set our app's pages
     this.pages = [
     ];
-
+    this.role_id = this.globalDataCtrl.getUser_role_id;
     //this.actualView = this.nav.getActive().name;
   }
 
@@ -65,6 +67,16 @@ export class MyApp {
   openProfile(){
     this.menu.close();
     this.nav.setRoot(UserProfilePage);
+  }
+
+  openAdminRegisterPage(){
+    this.menu.close();
+    this.nav.setRoot(AdminRegisterPage);
+  }
+
+  openHomePharmacy(){
+    this.menu.close();
+    this.nav.setRoot(HomePharmacyPage);
   }
 
   openPage(page) {

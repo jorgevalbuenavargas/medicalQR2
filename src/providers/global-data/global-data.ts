@@ -11,10 +11,12 @@ import { Injectable } from '@angular/core';
 export class GlobalDataProvider {
 
   user_id : any;
+  user_role_id : any;
   homePage : any;
 
   constructor() {
     this.user_id = "";
+    this.user_role_id = "";
     this.homePage = {};
   }
 
@@ -24,6 +26,14 @@ export class GlobalDataProvider {
 
   getUser_id() {
     return this.user_id;
+  }
+
+  setUser_role_id(value) {
+    this.user_role_id = value;
+  }
+
+  getUser_role_id() {
+    return this.user_role_id;
   }
 
   setHomePage(value) {

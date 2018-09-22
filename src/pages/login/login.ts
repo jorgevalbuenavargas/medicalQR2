@@ -11,7 +11,7 @@ import { AlertController } from 'ionic-angular';
 import {Md5} from 'ts-md5/dist/md5';
 import {ChangePasswordPage} from '../change-password/change-password';
 import { GlobalDataProvider } from '../../providers/global-data/global-data';
-
+import { HomeAdminPage } from '../home-admin/home-admin';
 
 @IonicPage()
 @Component({
@@ -90,6 +90,7 @@ export class LoginPage {
         if(this.correctUser.user_state_id == "2103d550-17c2-4ff5-9b61-73e7f4ea6a7f"){//Usuario habilitado
           if(this.loggedUser.value.role == this.correctUser.role_id){
             this.globalDataCtrl.setUser_id(this.correctUser.user_id);
+            this.globalDataCtrl.setUser_role_id(this.correctUser.role_id);
             if (this.correctUser.role_id == "37a938a1-e7f0-42c2-adeb-b8a9a36b6cb8"){ //Doctores
               this.globalDataCtrl.setHomePage(HomeDoctorsPage);
               this.navCtrl.push(HomeDoctorsPage, {
@@ -98,6 +99,9 @@ export class LoginPage {
             }else if (this.correctUser.role_id == "35d0b156-e7be-4af1-a84d-3e9e30a2bd06"){ //Ministerio
               this.globalDataCtrl.setHomePage(HomeMinistryPage);
               this.navCtrl.push(HomeMinistryPage);
+            }else if (this.correctUser.role_id == "" || this.correctUser.role_id == ""){ //Admin o auditor
+              this.globalDataCtrl.setHomePage(HomeAdminPage);
+              this.navCtrl.push(HomeAdminPage);              
             }else {
               this.globalDataCtrl.setHomePage(HomePharmacyPage);
               this.navCtrl.push(HomePharmacyPage);
