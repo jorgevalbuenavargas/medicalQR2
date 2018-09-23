@@ -20,7 +20,7 @@
           <ion-label color="dark-yellow">
             Tipo de usuario
           </ion-label>
-            <ion-select formControlName="role_id" (ionChange)="setValidatorsForMedicalLicense()">
+            <ion-select formControlName="role_id">
               <ion-option *ngFor="let role of allRoles" value="{{role.roles_id}}">{{role.name}}</ion-option>
           </ion-select>
         </ion-item>
@@ -94,6 +94,6 @@
           <p>Solo se permiten números y letras</p>
         </ion-item>
 
-        <button ion-button full color="darken-blue" type="submit" [disabled]="!newUser.valid">Registrarse</button>
+        <button ion-button full color="darken-blue" type="submit" [disabled]="!newUser.valid">Registrar</button>
       </form>
 </ion-content>

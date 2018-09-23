@@ -6,6 +6,7 @@ import { AlertController } from 'ionic-angular';
 import { DatabaseServiceProvider } from '../../providers/database-service/database-service';
 import { GlobalDataProvider } from '../../providers/global-data/global-data';
 import { UserProfilePage } from '../user-profile/user-profile';
+import { PasswordValidator } from  '../../validators/password';
 
 /**
  * Generated class for the ChangePasswordPage page.
@@ -28,8 +29,8 @@ export class ChangePasswordPage {
   constructor(public alertCtrl: AlertController, public navCtrl: NavController, public navParams: NavParams, public globalDataCtrl: GlobalDataProvider, public firebase: DatabaseServiceProvider, private formBuilder: FormBuilder) {
     this.passForm = this.formBuilder.group({
       oldPassword : ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      newPassword : ['', Validators.compose([Validators.required, Validators.minLength(8)])],
-      cPassword: ['', Validators.compose([Validators.required, Validators.minLength(8)])],
+      newPassword : ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(12), Validators.pattern('[a-zA-Z0-9]*'), PasswordValidator.isValid])],
+      cPassword: ['', Validators.compose([Validators.required, Validators.minLength(8), Validators.maxLength(12), Validators.pattern('[a-zA-Z0-9]*'), PasswordValidator.isValid])],
     })
     this.obtainUserInfo();
   }

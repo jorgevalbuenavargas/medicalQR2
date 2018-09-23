@@ -8,6 +8,7 @@ import {Md5} from 'ts-md5/dist/md5';
 import { Guid } from "guid-typescript";
 import { AlertController } from 'ionic-angular';
 import { PasswordValidator } from  '../../validators/password';
+import { HomeAdminPage } from '../home-admin/home-admin';
 
 /**
  * Generated class for the AdminRegisterPage page.
@@ -70,12 +71,14 @@ export class AdminRegisterPage {
   obtainAllRoles(){
     this.firebase.getRoles().valueChanges().subscribe(
       roles => {
-        this.allRoles = roles
+        this.allRoles = roles;
+        let tempRoles = []
         for (let i = 0; i < this.allRoles.length; i++) {
-          if(this.allRoles[i].roles_id != "" || this.allRoles[i].roles_id != ""){
-            this.allRoles = this.allRoles.splice(i, i+1)
+          if(this.allRoles[i].roles_id == "35d0b156-e7be-4af1-a84d-3e9e30a2bd06" || this.allRoles[i].roles_id == "dd1bc611-ad23-4ec6-9cb2-a4081fab1039"){
+            tempRoles.push(this.allRoles[i])
           }
         }
+        this.allRoles = tempRoles 
       }
     )
   }
@@ -107,7 +110,7 @@ export class AdminRegisterPage {
         password : cPassword,
         role_id : this.newUser.value.role_id,
         user_id : Guid.create().toString(),
-        user_state_id : this.newUser.value.user_state_id
+        user_state_id : "2103d550-17c2-4ff5-9b61-73e7f4ea6a7f"
       }
       this.firebase.createUser(createdUser);
       this.showPrompt();
@@ -138,7 +141,7 @@ export class AdminRegisterPage {
       buttons: ['OK']
     });
     alert.present();
-    this.navCtrl.push(LoginPage);
+    this.navCtrl.push(HomeAdminPage);
   }
 
 }
