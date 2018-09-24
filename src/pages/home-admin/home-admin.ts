@@ -24,7 +24,7 @@ export class HomeAdminPage {
 
   constructor(public menuCtrl: MenuController, public modalCtrl: ModalController, public globalDataCtrl: GlobalDataProvider, public navCtrl: NavController, public navParams: NavParams, public firebase: DatabaseServiceProvider) {
     this.menuCtrl.enable(true, 'myMenu');
-    this.role_id = this.globalDataCtrl.getUser_role_id;
+    this.role_id = this.globalDataCtrl.getUser_role_id();
   }
 
   openModal(user_id) {
@@ -44,6 +44,7 @@ export class HomeAdminPage {
     this.firebase.getEnabledDoctors().valueChanges().subscribe(
       doctors => {
         this.doctors = doctors;
+        this.doctors = this.filterByRole(this.doctors) 
     })
   }
 
@@ -52,6 +53,7 @@ export class HomeAdminPage {
     this.firebase.getDisabledDoctors().valueChanges().subscribe(
       doctors => {
         this.doctors = doctors;
+        this.doctors = this.filterByRole(this.doctors)  
     })
   }
 
@@ -59,10 +61,20 @@ export class HomeAdminPage {
     this.doctors = null;
     this.firebase.getPendingDoctors().valueChanges().subscribe(
       doctors => {
-        this.doctors = doctors;     
+        this.doctors = doctors; 
+        this.doctors = this.filterByRole(this.doctors)    
     })
   }
 
+  filterByRole(users){
+    let tempUsers = []
+    for (let i = 0; i < users.length; i++) {
+      if(users[i].role_id != "4cfd1451-51dd-4f5a-94fb-aae3ef410ef9"){
+        tempUsers.push(users[i])
+      }
+    }
+    return tempUsers
+  }
 
   showDoctors(selectedButton){
     if(selectedButton == "enabled"){

@@ -19,6 +19,7 @@ import { ChangePasswordPage } from '../pages/change-password/change-password';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { GlobalDataProvider } from '../providers/global-data/global-data';
 import { AdminRegisterPage } from '../pages/admin-register/admin-register';
+import { HomeAdminPage } from '../pages/home-admin/home-admin';
 
 
 @Component({
@@ -44,7 +45,7 @@ export class MyApp {
     // set our app's pages
     this.pages = [
     ];
-    this.role_id = this.globalDataCtrl.getUser_role_id;
+    //this.role_id = this.globalDataCtrl.getUser_role_id();
     //this.actualView = this.nav.getActive().name;
   }
 
@@ -89,6 +90,7 @@ export class MyApp {
   closeSession(){
     this.menu.close();
     this.globalDataCtrl.setUser_id("");
+    this.globalDataCtrl.setUser_role_id("");
     this.nav.setRoot(LoginPage);
   }
 }

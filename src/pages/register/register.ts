@@ -69,8 +69,15 @@ export class RegisterPage {
   obtainAllRoles(){
     this.firebase.getRoles().valueChanges().subscribe(
       roles => {
-        roles.splice(0, 1); 
+        //roles.splice(0, 1); 
         this.allRoles = roles;
+        let tempRoles = []
+        for (let i = 0; i < this.allRoles.length; i++) {
+          if(this.allRoles[i].roles_id == "37a938a1-e7f0-42c2-adeb-b8a9a36b6cb8" || this.allRoles[i].roles_id == "bd94bc0d-53d6-47e0-8bf6-95fc63b28a93"){
+            tempRoles.push(this.allRoles[i])
+          }
+        }
+        this.allRoles = tempRoles 
       }
     )
   }

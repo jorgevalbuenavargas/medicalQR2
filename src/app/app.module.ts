@@ -32,6 +32,8 @@ import { Guid } from "guid-typescript";
 import { ModalPharmacyPage } from '../pages/modal-pharmacy/modal-pharmacy';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { GlobalDataProvider } from '../providers/global-data/global-data';
+import { AdminRegisterPage } from '../pages/admin-register/admin-register';
+import { HomeAdminPage } from '../pages/home-admin/home-admin';
 
 
 
@@ -63,7 +65,9 @@ var config = {
     ModalQrPage,
     ModalPharmacyPage,
     ChangePasswordPage,
-    UserProfilePage
+    UserProfilePage,
+    AdminRegisterPage,
+    HomeAdminPage
   ],
   imports: [
     BrowserModule,
@@ -91,7 +95,9 @@ var config = {
     ModalQrPage,
     ModalPharmacyPage,
     ChangePasswordPage,
-    UserProfilePage
+    UserProfilePage,
+    AdminRegisterPage,
+    HomeAdminPage
   ],
   providers: [
     StatusBar,

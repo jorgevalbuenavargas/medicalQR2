@@ -11,10 +11,10 @@
       <button ion-item (click)="openHome()">
         Inicio
       </button>
-      <button ion-item (click)="openHomePharmacy()" *ngIf="role_id == ''">
+      <button ion-item (click)="openHomePharmacy()" *ngIf="globalDataCtrl.getUser_role_id() == 'dd1bc611-ad23-4ec6-9cb2-a4081fab1039'">
         Lectura de códigos QR
       </button>
-      <button ion-item (click)="openAdminRegisterPage()" *ngIf="role_id == '' || role_id == ''">
+      <button ion-item (click)="openAdminRegisterPage()" *ngIf="globalDataCtrl.getUser_role_id() == '4cfd1451-51dd-4f5a-94fb-aae3ef410ef9'">
         Registro de usuarios
       </button>
       <button ion-item (click)="openProfile()">

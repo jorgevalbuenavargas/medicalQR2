@@ -99,7 +99,7 @@ export class LoginPage {
             }else if (this.correctUser.role_id == "35d0b156-e7be-4af1-a84d-3e9e30a2bd06"){ //Ministerio
               this.globalDataCtrl.setHomePage(HomeMinistryPage);
               this.navCtrl.push(HomeMinistryPage);
-            }else if (this.correctUser.role_id == "" || this.correctUser.role_id == ""){ //Admin o auditor
+            }else if (this.correctUser.role_id == "4cfd1451-51dd-4f5a-94fb-aae3ef410ef9" || this.correctUser.role_id == "dd1bc611-ad23-4ec6-9cb2-a4081fab1039"){ //Admin o auditor
               this.globalDataCtrl.setHomePage(HomeAdminPage);
               this.navCtrl.push(HomeAdminPage);              
             }else {
