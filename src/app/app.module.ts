@@ -35,17 +35,14 @@ import { GlobalDataProvider } from '../providers/global-data/global-data';
 import { AdminRegisterPage } from '../pages/admin-register/admin-register';
 import { HomeAdminPage } from '../pages/home-admin/home-admin';
 
-
-
-
-
+//Obtener los datos de la base de firebase, nunca hacer commit con esa info
 var config = {
-  apiKey: "AIzaSyDUBtCAdjZem5IbH9PqMhudLVAXxJNq51o",
-  authDomain: "medicalqr-42850.firebaseapp.com",
-  databaseURL: "https://medicalqr-42850.firebaseio.com",
-  projectId: "medicalqr-42850",
-  storageBucket: "medicalqr-42850.appspot.com",
-  messagingSenderId: "988656361007"
+  apiKey: "",
+  authDomain: "",
+  databaseURL: "",
+  projectId: "",
+  storageBucket: "m",
+  messagingSenderId: ""
 };
 
 @NgModule({
